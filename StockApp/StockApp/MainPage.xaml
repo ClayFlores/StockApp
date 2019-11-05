@@ -1,14 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:StockApp"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="StockApp.MainPage">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout>
-
-</ContentPage>
+    <MasterDetailPage.Master>
+        <ContentPage Title="Master" BackgroundColor="SlateGray">
+            <StackLayout>
+                <Label Text="Short Term:"/>
+                <microcharts:ChartView 
+                    x:Name="Monthly"
+                    HeightRequest="200"/>
+                <!--<Label Text="Long Term:"/>-->
+                <microcharts:ChartView
+                    x:Name="Longterm"
+                    HeightRequest="200"/>
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <ContentPage BackgroundColor="SlateGray">
+            <ContentPage.Resources>
+                <x:Double x:Key="ezFontSize">8.0</x:Double>
+            </ContentPage.Resources>
+            <StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Entry x:Name="StockName"
+                        Placeholder="Stock Symbol"
+                        FontSize="12"
+                        Grid.Row="0" Grid.Column="0"/>
+                    <Button x:Name="GoButton" Text="Search" FontSize="12" Grid.Row="0" Grid.Column="1" Clicked="GoButton_Clicked"/>
+                    <Label x:Name="HighStock" Text="" FontSize="{StaticResource ezFontSize}" Grid.Row="1" Grid.Column="0"/>
+                    <Label x:Name="LowStock" Text="" FontSize="{StaticResource ezFontSize}" Grid.Row="1" Grid.Column="1"/>
+                </Grid>
+                <ListView x:Name="StockListView">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="Date:" Grid.Row="0" Grid.Column="0" FontSize="{StaticResource ezFontSize}" />
+                                        <Label Text="" Grid.Row="0" Grid.Column="1" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="High:" Grid.Row="0" Grid.Column="3" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="{Binding The2High}" Grid.Row="0" Grid.Column="4" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="Open:" Grid.Row="1" Grid.Column="0" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="{Binding The1Open}" Grid.Row="1" Grid.Column="1" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="Low:" Grid.Row="1" Grid.Column="3" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="{Binding The3Low}" Grid.Row="1" Grid.Column="4" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="Close:" Grid.Row="2" Grid.Column="0" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="{Binding The4Close}" Grid.Row="2" Grid.Column="1" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="Volume:" Grid.Row="2" Grid.Column="3" FontSize="{StaticResource ezFontSize}"/>
+                                        <Label Text="{Binding The5Volume}" Grid.Row="2" Grid.Column="4" FontSize="{StaticResource ezFontSize}"/>
+                                    </Grid>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Detail>
+    </MasterDetailPage>
